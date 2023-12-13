@@ -1,38 +1,35 @@
-#include <stdio.h>
-#include <ctype.h>
-#include <stdlib.h>
-#include <string.h>
 #include "monty.h"
-
 /**
- * push - push interger in the stack
- * @stack: stack 0n main
- * @line_cnt: Created lines
- *
- * Return: Failure (0), succes = 1
- */
-void push(stack_t **stack, unsigned int line_cnt)
+* _push - Push the node to a stack
+* @top: Top stack
+* @line_number: lines with  numbers of the current instruction
+* Return: void
+*/
+void _push(stack_t **top, unsigned int line_number)
 {
-        char *n = global.argument;
+int i = 0;
+int argg;
 
-        if ((is_digit(n)) == 0)
-        {
-                fprintf(stderr, "L%d: usage: push integer\n", line_cnt);
-                exit(EXIT_FAILURE);
-        }
+if (gv.arg == NULL)
+{
+fprintf(stderr, "L%d: usage: push integer\n", line_number);
+exit(EXIT_FAILURE);
+}
 
-        if (global.data_struct == 1)
-        {
-                if (!add_node(stack, atoi(global.argument)))
-                {
-                        exit(EXIT_FAILURE);
-                }
-        }
-        else
-        {
-                if (!queue_node(stack, atoi(global.argument)))
-                {
-                        exit(EXIT_FAILURE);
-                }
-        }
+if (gv.arg[0] == '-')
+{
+i++;
+
+while (gv.arg[i] != '\0')
+{
+if (gv.arg[i] < '0' || gv.arg[i] > '9')
+{
+fprintf(stderr, "L%d: usage: push integer\n", line_number);
+exit(EXIT_FAILURE);
+}
+i++;
+}
+}
+argg = atoi(gv.arg);
+addnode(top, argg);
 }
